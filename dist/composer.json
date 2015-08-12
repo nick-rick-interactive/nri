@@ -1,0 +1,7 @@
+{
+  "name":"sdchakqj10/BLANG-PHP",
+  "require": {
+    "php": "~5.5.12",
+    "ext-gd": "*"
+  }
+}
