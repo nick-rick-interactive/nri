@@ -215,6 +215,7 @@ gulp.task('serve', function () {
     gulp.watch(dirs.src + '/less/main.less', ['compile:less']);
     gulp.watch(dirs.src + '/js/**/*.js', ['compile:js-watch']);
     gulp.watch(dirs.src + '/index.php', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/views/*', ['compile:views-watch']);
 
 });
 
@@ -227,6 +228,7 @@ gulp.task('serve-dev', function () {
     gulp.watch(dirs.src + '/less/main.less', ['compile:less']);
     gulp.watch(dirs.src + '/js/**/*.js', ['compile:js-watch:dev']);
     gulp.watch(dirs.src + '/index.php', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/views/*', ['compile:views-watch']);
 
 });
 

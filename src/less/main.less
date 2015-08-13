@@ -14,9 +14,24 @@
 /* COLORS */
 @white: #ffffff;
 @darkWhite: #f9f9f9;
-@red: #ce0404;
-@transRed: rgba(206,4,4,0.8);
-@black: #1b1b1b;
+
+@red: #d14925;
+.transRedColor(@opa){
+  color: rgba(209,73,37,@opa);
+}
+.transRedBG(@opa){
+  background-color: rgba(209,73,37,@opa);
+}
+
+@blue: #0076a3;
+.transBlueColor(@opa){
+  color: rgba(0,118,163,@opa);
+}
+.transBlueBG(@opa){
+  background-color: rgba(0,118,163,@opa);
+}
+
+@black: #504d54;
 @grey: #5e5e5e;
 @lightgrey: #999999;
 
@@ -36,7 +51,7 @@ input,textarea{
   &:active,&:focus{
     border: 1px solid @red !important;
     border-left: 10px solid @red !important;
-    .box-shadow(-5px 0px 15px @transRed);
+    .box-shadow(-5px 0px 15px @red);
     margin-left:10px;
   }
   width: 100%;
@@ -70,11 +85,13 @@ input,textarea{
 
 .site{
   display: block;
-  position: relative;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-
+  backface-visibility:hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility:    hidden;
+  z:1;
 
   .main-header {
     min-height: 200px;
@@ -129,6 +146,84 @@ input,textarea{
           width: 100%;
         }
       }
+    }
+  }
+}
+
+.work-block{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 300px;
+  background: no-repeat center center;
+  background-size:cover;
+  backface-visibility:hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility:    hidden;
+  overflow: hidden;
+  zoom:1;
+  transition:0.2s height ease;
+  margin: 10px 0;
+  .wb-info{
+    position: absolute;
+    left: -100%;
+    .transBlueBG(0.8);
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    text-align: left;
+    transition:left 0.5s ease;
+  }
+  h2{
+    color: @white;
+  }
+  p{
+    color: @white;
+  }
+  a{
+    color: @white;
+  }
+  &:hover{
+    height:400px;
+    .wb-info{
+      left:0;
+    }
+  }
+  .cover-grad{
+    display: block;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    z-index: 2;
+    position: absolute;
+    backface-visibility:hidden;
+    img{
+      width: 100%;
+      height:100%;
+    }
+  }
+  .work-bg-img{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z:1;
+    z-index: 1;
+    @media @scr-sm{
+      width: 200%;
+      left:-50%;
+    }
+  }
+  &.alt{
+    .cover-grad{
+      left:auto;
+      right:0;
+    }
+    .wb-info{
+      .transRedBG(0.8);
+      text-align: right;
     }
   }
 }
