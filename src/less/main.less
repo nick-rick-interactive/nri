@@ -41,6 +41,14 @@
   padding: 0;
 }
 
+hr.marker{
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #000;
+  position: fixed;
+  left:0;
+}
+
 input,textarea{
   .border-radius(0);
   .box-sizing(border-box);
@@ -94,10 +102,10 @@ input,textarea{
   z:1;
 
   .main-header {
-    min-height: 200px;
+    min-height: 50px;
     position: relative;
     @media @scr-lg{
-      min-height: 100px;
+      min-height: 50px;
     }
     @media @scr-xs{
       min-height: 50px;
@@ -211,6 +219,7 @@ input,textarea{
     width:100%;
     z:1;
     z-index: 1;
+    display: none;
     @media @scr-sm{
       width: 200%;
       left:-50%;
@@ -226,4 +235,6 @@ input,textarea{
       text-align: right;
     }
   }
+  border:1px solid #000;
+  .box-sizing(border-box);
 }
