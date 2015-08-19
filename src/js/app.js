@@ -15,6 +15,11 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             controller: HomeController,
             resolve: HomeController.resolve
         })
+        .when('/work/:work', {
+            templateUrl: 'views/work.html',
+            controller: WorkController,
+            resolve: WorkController.resolve
+        })
         .otherwise({
             redirectTo: '/'
         });

@@ -27,16 +27,37 @@
     <div id="main-overlay">
         <span class="spinner" us-spinner="{radius:40, width:10, length: 4, color: '#ce0404'}" spinner-key="spinner-main"></span>
     </div>
+    <div class="header mobile-header">
+        <div class="container">
+            <div class="col-sm-12">
+                <div class="top_logo">
+                    <img src="img/logo.png" class=""/>
+                </div>
+                <div class="top_sub_logo">
+                    <img src="img/nri.png" class=""/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detail-overlay" class="main-view"></div>
 
     <div class="site">
-        <header class="container-fluid main-header">
-            <nav class="col-sm-12">
-                HEADER
-            </nav>
+        <header class="header">
+            <div class="container-fluid">
+                <nav class="col-sm-12">
+                    <div class="top_logo">
+                        <img src="img/logo.png" class=""/>
+                    </div>
+                    <div class="top_sub_logo">
+                        <img src="img/nri.png" class=""/>
+                    </div>
+                </nav>
+            </div>
         </header>
 
         <div class="container-fluid">
-            <div ng-view class="main-view"></div>
+            <div ng-view class="main-view" id="main"></div>
         </div>
 
         <footer class="container-fluid main-footer">
