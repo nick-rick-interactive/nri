@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="NRI DATA" uuid="0e960165-651e-42f7-b0c0-95f891c8779e">
+      <secret-storage>master_key</secret-storage>
+      <user-name>empathet</user-name>
+      <schema-pattern>nri_data.*</schema-pattern>
+      <default-schemas>nri_data.*</default-schemas>
+    </data-source>
+  </component>
+</project>

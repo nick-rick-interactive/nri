@@ -1,3 +1,5 @@
 archive
 node_modules
 assets
+src/src/config/db.vars.inc
+dist/src/config/db.vars.inc

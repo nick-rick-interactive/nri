@@ -377,12 +377,12 @@ AddDefaultCharset utf-8
 
 # Option 1: rewrite www.example.com → example.com
 
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{HTTPS} !=on
-    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-    RewriteRule ^ %{ENV:PROTO}://%1%{REQUEST_URI} [R=301,L]
-</IfModule>
+#<IfModule mod_rewrite.c>
+#    RewriteEngine On
+#    RewriteCond %{HTTPS} !=on
+#    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+#    RewriteRule ^ %{ENV:PROTO}://%1%{REQUEST_URI} [R=301,L]
+#</IfModule>
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -982,3 +982,12 @@ FileETag None
 #     RewriteCond %{REQUEST_FILENAME} !-f
 #     RewriteRule ^(.+)\.(\d+)\.(bmp|css|cur|gif|ico|jpe?g|js|png|svgz?|webp|webmanifest)$ $1.$3 [L]
 # </IfModule>
+
+
+RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} -s [OR]
+    RewriteCond %{REQUEST_FILENAME} -l [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^.*$ - [NC,L]
+
+    RewriteRule ^(.*) /index.php [NC,L]

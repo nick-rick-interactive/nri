@@ -23,7 +23,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         .otherwise({
             redirectTo: '/'
         });
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
 }]);
 
 
@@ -71,6 +71,7 @@ function getResolve(_url) {
                 $http.get(_url).
                     success(function (data, status, headers, config) {
                         // hide Loader
+                        console.log(data);
                         TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:0 });
                         TweenMax.to($('#main-overlay').find('span'), 0.5, {
                             marginTop:'-130px',

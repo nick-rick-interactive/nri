@@ -37,11 +37,19 @@
 }
 
 @black: #504d54;
+@faintBlue: rgba(0,0,0,0.1);
+.transBlackColor(@opa){
+  color: rgba(0,0,0,@opa);
+}
+.transBlackBG(@opa){
+  background-color: rgba(0,0,0,@opa);
+}
+
 @grey: #5e5e5e;
 @lightgrey: #999999;
 
 *{
-  font-family: @Arial;
+  font-family: 'Raleway', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -95,6 +103,9 @@ hr.marker{
       display: inline-block;
       img{
         width: 100px;
+        @media @scr-xs{
+          width: 50px;
+        }
       }
     }
     .top_sub_logo{
@@ -274,27 +285,17 @@ input,textarea{
   overflow: hidden;
   zoom:1;
   transition:0.2s height ease;
-  &:hover{
-    height:400px;
-    .wb-info{
-      left:0;
-    }
-  }
+  cursor: pointer;
   @media @scr-xs{
-    height: 200px;
-    &:hover{
-      .wb-info{
-        left:0;
-      }
-      height:300px;
-    }
+    overflow: visible;
+    margin-bottom: 100px;
   }
   .wb-info{
     position: absolute;
     left: -100%;
     display: table;
     .transBlueBG(0.8);
-    .box-sizing(borer-box);
+    .box-sizing(border-box);
     padding: 20px;
     top:0;
     width: 100%;
@@ -302,8 +303,40 @@ input,textarea{
     z-index: 3;
     text-align: left;
     transition:all 0.5s ease;
+    @media @scr-md{
+      padding: 10px;
+      left: 0;
+      top:170px;
+      height: 130px;
+      .transBlueBG(1);
+    }
     @media @scr-xs{
       padding: 10px;
+      left: 0;
+      top:120px;
+      height: 150px;
+      .transBlueBG(1);
+    }
+    .wb-tech{
+      position: absolute;
+      display: block;
+      bottom: 20px;
+      left:10px;
+      right:10px;
+      text-align: center;
+      transition:all 0.5s ease;
+      @media @scr-md{
+        bottom: 10px;
+      }
+      img{
+        width: 30px;
+        margin: 0 7px 0 0;
+        transition:all 0.5s ease;
+        @media @scr-md{
+          width: 20px;
+          margin: 0 3px 0 0;
+        }
+      }
     }
     .wb-row{
       display: table-row;
@@ -313,12 +346,15 @@ input,textarea{
         height: 100%;
         vertical-align: middle;
         text-align: center;
+        @media @scr-md{
+          vertical-align: top;
+        }
       }
     }
     .work-logo{
       max-height: 75px;
       max-width: 300px;
-      @media @scr-xs{
+      @media @scr-md{
         max-height: 50px;
         max-width: 200px;
       }
@@ -326,10 +362,17 @@ input,textarea{
     h2{
       color: @white;
       display: block;
+      @media @scr-md{
+        font-size: 18px;
+        margin: 7px;
+      }
     }
     p{
       color: @white;
       display: block;
+      @media @scr-md{
+        display: none;
+      }
     }
     a{
       color: @white;
@@ -358,6 +401,10 @@ input,textarea{
       .transRedBG(0.8);
       right: -100%;
       left:auto;
+      @media @scr-md{
+        right: 0;
+        .transRedBG(1);
+      }
     }
     &:hover{
       .wb-info{
@@ -365,7 +412,21 @@ input,textarea{
       }
     }
   }
-  .box-sizing(border-box);
+  &:hover{
+    height:400px;
+    .wb-info{
+      left:0;
+    }
+  }
+  @media @scr-xs{
+    height: 200px;
+    &:hover{
+      .wb-info{
+        left:0;
+      }
+      height:200px;
+    }
+  }
 }
 
 #detail-overlay{

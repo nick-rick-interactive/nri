@@ -49402,7 +49402,7 @@ function HomeController ($scope, $http, $sce, datasets) {
             TweenMax.to($("#detail-overlay"),0.5,{left:"0",ease:"Cubic.easeOut",delay:0.75});
         }
         $("#detail-overlay").html($(this).html());
-        //window.location.href = "work/good";
+        //window.location.href = "#work/good";
     }
     var i = 0;
     $(".work-block").each(function(){
@@ -49490,9 +49490,11 @@ HomeController.resolve = getResolve('src/handler.php?section=home');
  * Created by nickrickenbach on 8/11/15.
  */
 function WorkController ($scope, $http, $sce, datasets) {
-    console.log($http);
+    console.log($http());
+    //$scope.work = datasets.work;
+    //$scope.categories = datasets.categories;
 };
-HomeController.resolve = getResolve('src/handler.php?section=work');
+WorkController.resolve = getResolve('src/handler.php?section=work');
 
 /**
  * Created by nickrickenbach on 8/11/15.
@@ -49519,7 +49521,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         .otherwise({
             redirectTo: '/'
         });
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
 }]);
 
 
@@ -49567,6 +49569,7 @@ function getResolve(_url) {
                 $http.get(_url).
                     success(function (data, status, headers, config) {
                         // hide Loader
+                        console.log(data);
                         TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:0 });
                         TweenMax.to($('#main-overlay').find('span'), 0.5, {
                             marginTop:'-130px',

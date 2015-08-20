@@ -39,7 +39,7 @@ function HomeController ($scope, $http, $sce, datasets) {
             TweenMax.to($("#detail-overlay"),0.5,{left:"0",ease:"Cubic.easeOut",delay:0.75});
         }
         $("#detail-overlay").html($(this).html());
-        //window.location.href = "work/good";
+        //window.location.href = "#work/good";
     }
     var i = 0;
     $(".work-block").each(function(){
