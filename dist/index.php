@@ -57,9 +57,10 @@
             </div>
         </header>
 
-        <div class="container-fluid">
-            <div ng-view class="main-view" id="main"></div>
-        </div>
+            <div class="container-fluid">
+                <div ng-view class="main-view" id="main"></div>
+                <div class="main-view" id="main-alt"></div>
+            </div>
 
         <footer class="container-fluid main-footer">
             <div class="container">

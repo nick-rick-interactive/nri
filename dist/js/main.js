@@ -49364,8 +49364,10 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 /**
  * Created by nickrickenbach on 8/11/15.
  */
-function HomeController ($scope, $http, $sce, datasets) {
-    console.log($http);
+function HomeController ($rootScope, $scope, $http, $sce, datasets) {
+    console.log(datasets.projects);
+
+    $scope.projects = datasets.projects;
     /*$scope.trustHTML = function(_html){
         return $sce.trustAsHtml(_html);
     }*/
@@ -49384,6 +49386,7 @@ function HomeController ($scope, $http, $sce, datasets) {
         var o = $(this).offset();
         var to = (!$(this).hasClass("alt")) ? "left 50%" : "right 50%";
         var rot = ($(this).hasClass("alt")) ? "-90" : "90";
+        $rootScope.isAltProject = $(this).hasClass("alt");
         TweenMax.set($(this).parent().parent(),{ transformOrigin:to, transformPerspective:600});
         TweenMax.to($(this).parent().parent(),0.5,{rotationY:rot,ease:"Cubic.easeIn"});
         if($(this).hasClass("alt")){
@@ -49404,23 +49407,6 @@ function HomeController ($scope, $http, $sce, datasets) {
         $("#detail-overlay").html($(this).html());
         //window.location.href = "#work/good";
     }
-    var i = 0;
-    $(".work-block").each(function(){
-        var to = (i==0) ? "left 50%" : "right 50%";
-        var rot = (i==0) ? 90 : -90;
-        var crot = (i==1) ? 0 : 180;
-        TweenMax.set($(this), { rotationY:rot, transformOrigin:to, transformPerspective:600 });
-        TweenMax.set($(this).find(".cover-grad"), { rotationZ:crot, transformOrigin:"50% 50%", transformPerspective:1000 });
-        if(i==1){
-            $(this).addClass('alt');
-            $(this).parent().parent().addClass('alt');
-        }
-        i = (i==0) ? 1 : 0;
-        $(this).bind("mouseover",workOver);
-        $(this).bind("mouseout",workOut);
-        $(this).bind("click",workClick);
-        //$(this).bind("transitionend webkitTransitionEnd oTransitionEnd",workScroll);
-    });
     function workScroll(){
         var i = 0;
         var wh = $(window).height();
@@ -49473,7 +49459,9 @@ function HomeController ($scope, $http, $sce, datasets) {
                 }
             }
 
-            TweenMax.to($(this), 0.2, { rotationY:rotY });
+            var to = (!$(this).hasClass("alt")) ? "left 50%" : "right 50%";
+
+            TweenMax.to($(this), 0.2, { rotationY:rotY, transformOrigin:to, transformPerspective:600 });
             //TweenMax.set($(this).find(".work-bg-img"), { css:{transform:"translateY(" + (0-wh-(ot-st-wh/6))/1.5 + "px)" }});
             //TweenMax.to($(this).find(".work-bg-img"), 0.2, { css:{transform:"translateY(" + ((ot-st-wh/6)) + "px)" }});
             //TweenMax.to($(this).find(".cover-grad"), 0.2, { /*width:((1-perc)*100)+"%",*/ opacity:(1-perc) });
@@ -49481,18 +49469,43 @@ function HomeController ($scope, $http, $sce, datasets) {
             count++;
         });
     }
-    $(document).scroll(workScroll);
-    workScroll();
+    $scope.$on('$viewContentLoaded', function(){
+        prevView = $("#main-alt").html();
+        newView = $("#view").html();
+        switchViews('home');
+        var i = 0;
+        $(".work-block").each(function(){
+            var to = (i==0) ? "left 50%" : "right 50%";
+            var rot = (i==0) ? 90 : -90;
+            var crot = (i==1) ? 0 : 180;
+            TweenMax.set($(this), { rotationY:rot, transformOrigin:to, transformPerspective:600 });
+            TweenMax.set($(this).find(".cover-grad"), { rotationZ:crot, transformOrigin:"50% 50%", transformPerspective:1000 });
+            i = (i==0) ? 1 : 0;
+            $(this).bind("mouseover",workOver);
+            $(this).bind("mouseout",workOut);
+            $(this).bind("click",workClick);
+            //$(this).bind("transitionend webkitTransitionEnd oTransitionEnd",workScroll);
+        });
+        $(document).scroll(workScroll);
+        $(document).resize(workScroll);
+        $(document).bind("orientationchange",workScroll);
+        setTimeout(workScroll,100);
+    });
 };
 HomeController.resolve = getResolve('src/handler.php?section=home');
 
 /**
  * Created by nickrickenbach on 8/11/15.
  */
-function WorkController ($scope, $http, $sce, datasets) {
-    console.log($http());
+function WorkController ($scope, $http, $sce, $routeParams, datasets) {
+    console.log(datasets)
     //$scope.work = datasets.work;
     //$scope.categories = datasets.categories;
+    $scope.$on('$viewContentLoaded', function() {
+        prevView = $("#main").html();
+        newView = $("#view").html();
+        switchViews('work');
+    });
 };
 WorkController.resolve = getResolve('src/handler.php?section=work');
 
@@ -49544,8 +49557,8 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
 
 function getResolve(_url) {
     return {
-        datasets  : function ($rootScope, $q, $http, $location) {
-
+        datasets  : function ($rootScope, $q, $http, $location, $route) {
+            _url = ($route.current.params.work) ? _url+"&project="+$route.current.params.work : _url;
             if (TweenMax) {
                 // showLoader
                 TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:1 });
@@ -49565,29 +49578,39 @@ function getResolve(_url) {
                 $rootScope.startSpin('spinner-main');
 
                 var deferred = $q.defer();
+                TweenMax.to($("body, html"),0.5,{scrollTop:0,onComplete:function() {
 
-                $http.get(_url).
-                    success(function (data, status, headers, config) {
-                        // hide Loader
-                        console.log(data);
-                        TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:0 });
-                        TweenMax.to($('#main-overlay').find('span'), 0.5, {
-                            marginTop:'-130px',
-                            rotationZ:-180,
-                            ease:'Cubic.easeInOut'
+                $("#main-alt").css({left:"0",position:"relative"}).html($("#main").html());
+                $("#main").css({left:"100%",position:"absolute"}).html("");
+
+
+                    $http.get(_url).
+                        success(function (data, status, headers, config) {
+                            // hide Loader
+                                TweenMax.to($('#main-overlay'), 0.5, {autoAlpha: 0});
+                                TweenMax.to($('#main-overlay').find('span'), 0.5, {
+                                    marginTop: '-130px',
+                                    rotationZ: -180,
+                                    ease: 'Cubic.easeInOut'
+                                });
+                            deferred.resolve(data);
+                            $("#main-alt").css({top:$("#main").offset().top+"px",position:"absolute"});
+                            $("#main").css({top:"0",position:"relative"});
+                            TweenMax.to($("#main"),0.5,{left:"0"});
+                            TweenMax.to($("#main-alt"),0.5,{left:"-100%"});
+                        }).
+                        error(function (data, status, headers, config) {
+                            // hide Loader
+                            TweenMax.to($('#main-overlay'), 0.5, {autoAlpha: 0});
+                            TweenMax.to($('#main-overlay').find('span'), 0.5, {
+                                marginTop: '-130px',
+                                rotationZ: -180,
+                                ease: 'Cubic.easeInOut'
+                            });
+                            deferred.resolve('error')
                         });
-                        deferred.resolve(data);
-                    }).
-                    error(function (data, status, headers, config) {
-                        // hide Loader
-                        TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:0 });
-                        TweenMax.to($('#main-overlay').find('span'), 0.5, {
-                            marginTop:'-130px',
-                            rotationZ:-180,
-                            ease:'Cubic.easeInOut'
-                        });
-                        deferred.resolve('error')
-                    });
+
+                }});
 
                 return deferred.promise;
 
@@ -49601,6 +49624,8 @@ function getResolve(_url) {
 }
 
 var isTop = true;
+var prevView;
+var newView;
 function headerSwap() {
     var st = $(document).scrollTop();
     var nt = 400;
@@ -49616,6 +49641,9 @@ function headerSwap() {
             TweenMax.to($(".mobile-header"),0.2,{marginTop:"-100px",padding:""});
         }
     }
+}
+function switchViews(){
+    //$("#main").html(newView);
 }
 jQuery(document).ready(function() {
     $(document).bind("scroll",headerSwap);

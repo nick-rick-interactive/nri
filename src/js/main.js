@@ -1,4 +1,6 @@
 var isTop = true;
+var prevView;
+var newView;
 function headerSwap() {
     var st = $(document).scrollTop();
     var nt = 400;
@@ -14,6 +16,9 @@ function headerSwap() {
             TweenMax.to($(".mobile-header"),0.2,{marginTop:"-100px",padding:""});
         }
     }
+}
+function switchViews(){
+    //$("#main").html(newView);
 }
 jQuery(document).ready(function() {
     $(document).bind("scroll",headerSwap);

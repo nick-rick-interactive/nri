@@ -46,8 +46,8 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
 
 function getResolve(_url) {
     return {
-        datasets  : function ($rootScope, $q, $http, $location) {
-
+        datasets  : function ($rootScope, $q, $http, $location, $route) {
+            _url = ($route.current.params.work) ? _url+"&project="+$route.current.params.work : _url;
             if (TweenMax) {
                 // showLoader
                 TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:1 });
@@ -67,29 +67,39 @@ function getResolve(_url) {
                 $rootScope.startSpin('spinner-main');
 
                 var deferred = $q.defer();
+                TweenMax.to($("body, html"),0.5,{scrollTop:0,onComplete:function() {
 
-                $http.get(_url).
-                    success(function (data, status, headers, config) {
-                        // hide Loader
-                        console.log(data);
-                        TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:0 });
-                        TweenMax.to($('#main-overlay').find('span'), 0.5, {
-                            marginTop:'-130px',
-                            rotationZ:-180,
-                            ease:'Cubic.easeInOut'
+                $("#main-alt").css({left:"0",position:"relative"}).html($("#main").html());
+                $("#main").css({left:"100%",position:"absolute"}).html("");
+
+
+                    $http.get(_url).
+                        success(function (data, status, headers, config) {
+                            // hide Loader
+                                TweenMax.to($('#main-overlay'), 0.5, {autoAlpha: 0});
+                                TweenMax.to($('#main-overlay').find('span'), 0.5, {
+                                    marginTop: '-130px',
+                                    rotationZ: -180,
+                                    ease: 'Cubic.easeInOut'
+                                });
+                            deferred.resolve(data);
+                            $("#main-alt").css({top:$("#main").offset().top+"px",position:"absolute"});
+                            $("#main").css({top:"0",position:"relative"});
+                            TweenMax.to($("#main"),0.5,{left:"0"});
+                            TweenMax.to($("#main-alt"),0.5,{left:"-100%"});
+                        }).
+                        error(function (data, status, headers, config) {
+                            // hide Loader
+                            TweenMax.to($('#main-overlay'), 0.5, {autoAlpha: 0});
+                            TweenMax.to($('#main-overlay').find('span'), 0.5, {
+                                marginTop: '-130px',
+                                rotationZ: -180,
+                                ease: 'Cubic.easeInOut'
+                            });
+                            deferred.resolve('error')
                         });
-                        deferred.resolve(data);
-                    }).
-                    error(function (data, status, headers, config) {
-                        // hide Loader
-                        TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:0 });
-                        TweenMax.to($('#main-overlay').find('span'), 0.5, {
-                            marginTop:'-130px',
-                            rotationZ:-180,
-                            ease:'Cubic.easeInOut'
-                        });
-                        deferred.resolve('error')
-                    });
+
+                }});
 
                 return deferred.promise;
 
