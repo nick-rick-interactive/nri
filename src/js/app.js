@@ -50,43 +50,64 @@ function getResolve(_url) {
             _url = ($route.current.params.work) ? _url+"&project="+$route.current.params.work : _url;
             if (TweenMax) {
                 // showLoader
-                TweenMax.to($('#main-overlay'), 0.5, { autoAlpha:1 });
+                TweenMax.to($('#main-overlay'), 0.2, { autoAlpha:1 });
 
                 TweenMax.set($('#main-overlay').find('span'), {
                     marginTop:'0',
-                    rotationZ:180
+                    opacity:0,
+                    rotationX:90
                 });
 
                 TweenMax.to($('#main-overlay').find('span'), 0.5, {
                     marginTop:'-65px',
-                    rotationZ:0,
-                    ease:'Cubic.easeInOut'
+                    rotationX:0,
+                    opacity:1,
+                    ease:'Cubic.easeInOut',
+                    delay:0.2
                 });
 
                 // start Spinner
                 $rootScope.startSpin('spinner-main');
 
                 var deferred = $q.defer();
-                TweenMax.to($("body, html"),0.5,{scrollTop:0,onComplete:function() {
+                TweenMax.to($(".site"),0.5,{scrollTop:0,onComplete:function() {
 
-                $("#main-alt").css({left:"0",position:"relative"}).html($("#main").html());
+                $("#main-alt").css({display:"block",top:0,left:"0",position:"relative"}).html($("#main").html());
                 $("#main").css({left:"100%",position:"absolute"}).html("");
 
 
                     $http.get(_url).
                         success(function (data, status, headers, config) {
                             // hide Loader
-                                TweenMax.to($('#main-overlay'), 0.5, {autoAlpha: 0});
+                                TweenMax.to($('#main-overlay'), 0.2, {autoAlpha: 0,delay:0.3});
                                 TweenMax.to($('#main-overlay').find('span'), 0.5, {
                                     marginTop: '-130px',
-                                    rotationZ: -180,
-                                    ease: 'Cubic.easeInOut'
+                                    rotationX: -90,
+                                    opacity: 0,
+                                    ease: 'Cubic.easeInOut',
+                                    onComplete:function() {
+                                        $("#main").css({top: "0", position: "relative"});
+                                        var off = ($("#main").offset()) ? $("#main").offset().top : 0;
+                                        $("#main-alt").css({top: off + "px", position: "absolute"});
+
+                                        //show angular data
+                                        deferred.resolve(data);
+
+                                        setTimeout(function () {
+                                            $("#main").css({left: "100%"});
+                                            TweenMax.to($("#main"), 0.5, {left: "0", ease: "Expo.easeInOut"});
+                                            //$(".site-hide").css({height:$("#main").height()+"px"});
+                                            TweenMax.to($("#main-alt"), 0.5, {
+                                                left: "-100%",
+                                                ease: "Expo.easeInOut",
+                                                delay: 0.1,
+                                                onComplete: function () {
+                                                    $("#main-alt").html("").css({display:"none"});
+                                                }
+                                            });
+                                        }, 10);
+                                    }
                                 });
-                            deferred.resolve(data);
-                            $("#main-alt").css({top:$("#main").offset().top+"px",position:"absolute"});
-                            $("#main").css({top:"0",position:"relative"});
-                            TweenMax.to($("#main"),0.5,{left:"0"});
-                            TweenMax.to($("#main-alt"),0.5,{left:"-100%"});
                         }).
                         error(function (data, status, headers, config) {
                             // hide Loader

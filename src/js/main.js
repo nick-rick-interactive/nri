@@ -2,7 +2,7 @@ var isTop = true;
 var prevView;
 var newView;
 function headerSwap() {
-    var st = $(document).scrollTop();
+    var st = $(".site").scrollTop();
     var nt = 400;
     if(st>nt){
         if(isTop){
@@ -21,5 +21,5 @@ function switchViews(){
     //$("#main").html(newView);
 }
 jQuery(document).ready(function() {
-    $(document).bind("scroll",headerSwap);
+    $(".site").bind("scroll",headerSwap);
 });

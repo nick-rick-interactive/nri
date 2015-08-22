@@ -70,7 +70,10 @@ gulp.task('archive:zip', function (done) {
 gulp.task('clean', function (done) {
     require('del')([
         dirs.archive,
-        dirs.dist
+        dirs.dist,
+        "!"+dirs.dist+"/.git/",
+        "!"+dirs.dist+"/.gitignore",
+        "!"+dirs.dist+"/.gitattributes",
     ], done);
 });
 

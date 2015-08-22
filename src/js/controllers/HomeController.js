@@ -11,13 +11,13 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
     $("body").append($("<hr class='marker m1'/>"));
     $("body").append($("<hr class='marker m2'/>"));
 
-    function workOver(){
+    $scope.workOver = function(){
         //TweenMax.to($(this), 0.5, {rotationY:0});
     }
-    function workOut(){
+    $scope.workOut = function(){
         workScroll();
     }
-    function workClick(){
+    $scope.workClick = function(){
         var wh = $(window).height();
         var ww = $(window).width();
         var o = $(this).offset();
@@ -47,8 +47,8 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
     function workScroll(){
         var i = 0;
         var wh = $(window).height();
-        var wbt = $(".work-blocks").offset().top;
-        var st = $(document).scrollTop();
+        var so = $(".site").offset().top;
+        var st = $(".site").scrollTop();
         var count = 0;
 
         // P1 is top point
@@ -62,7 +62,8 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
         //$(".marker.m2").css({top:m2+"px"});
 
         $(".work-block").each(function(){
-            var ot = Math.round($(this).offset().top);
+            var ot = Math.round($(this).offset().top)+st;
+            //console.log(ot);
 
             // Enter points
             var p1 = ot+m1;
@@ -80,24 +81,46 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
             var prc2 = Math.abs(sp-p1o)/Math.abs(p1-p1o);
 
             var rotY;
+            var op;
+            $(this).attr("data-prev",$(this).attr("data-new"));
             if(sp<p1&&sp>p2o){ // INSIDE
                 rotY = 0;
-                TweenMax.to($(this).find(".cover-grad"), 0.2, { opacity:0 });
+                $(this).attr("data-new","inside");
+                op = 0;
+                TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:0 });
             }else{
                 if(sp<=p2o&&sp>=p2){ // INSIDE TOP
+                    $(this).attr("data-new","inside");
+                    rotY = 0;
+                    op = 0;
                     rotY = (i==0) ? 90-(prc1*90) : -90+(prc1*90);
-                    TweenMax.to($(this).find(".cover-grad"), 0.2, { opacity:(1-prc1) });
+                    TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:(1-prc1) });
                 }else if(sp<=p1o&&sp>=p1){ // INSIDE BOTTOM
+                    $(this).attr("data-new","inside");
+                    rotY = 0;
+                    op = 0;
                     rotY = (i==0) ? 90-(prc2*90) : -90+(prc2*90);
-                    TweenMax.to($(this).find(".cover-grad"), 0.2, { opacity:(1-prc2) });
+                    TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:(1-prc2) });
                 }else{ // OUTSIDE
+                    $(this).attr("data-new","out");
                     rotY = (i==0) ? 90 : -90;
-                    TweenMax.to($(this).find(".cover-grad"), 0.2, { opacity:1 });
+                    op = 1;
+                    TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:1 });
                 }
             }
 
             var to = (!$(this).hasClass("alt")) ? "left 50%" : "right 50%";
 
+            if($(this).attr("data-new")!=$(this).attr("data-prev")) {
+                //console.log($(this).attr("data-new")+" "+$(this).attr("data-prev"));
+                /*TweenMax.to($(this).find(".cover-grad"), 0.5, { opacity:op });
+                TweenMax.to($(this), 0.5, {
+                    rotationY: rotY,
+                    transformOrigin: to,
+                    transformPerspective: 600,
+                    ease: "Expo.easeInOut"
+                });*/
+            }
             TweenMax.to($(this), 0.2, { rotationY:rotY, transformOrigin:to, transformPerspective:600 });
             //TweenMax.set($(this).find(".work-bg-img"), { css:{transform:"translateY(" + (0-wh-(ot-st-wh/6))/1.5 + "px)" }});
             //TweenMax.to($(this).find(".work-bg-img"), 0.2, { css:{transform:"translateY(" + ((ot-st-wh/6)) + "px)" }});
@@ -118,12 +141,9 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
             TweenMax.set($(this), { rotationY:rot, transformOrigin:to, transformPerspective:600 });
             TweenMax.set($(this).find(".cover-grad"), { rotationZ:crot, transformOrigin:"50% 50%", transformPerspective:1000 });
             i = (i==0) ? 1 : 0;
-            $(this).bind("mouseover",workOver);
-            $(this).bind("mouseout",workOut);
-            $(this).bind("click",workClick);
             //$(this).bind("transitionend webkitTransitionEnd oTransitionEnd",workScroll);
         });
-        $(document).scroll(workScroll);
+        $(".site").scroll(workScroll);
         $(document).resize(workScroll);
         $(document).bind("orientationchange",workScroll);
         setTimeout(workScroll,100);

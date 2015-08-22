@@ -4,7 +4,7 @@
         <?php if(strpos($_SERVER['HTTP_HOST'],"localhost")!==FALSE){ ?>
             <base href="/nri/dist/">
         <?php }else{ ?>
-            <base href="/">
+            <base href="/nri/dist">
         <?php } ?>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -26,7 +26,9 @@
     <![endif]-->
 
     <div id="main-overlay">
-        <span class="spinner" us-spinner="{radius:40, width:10, length: 4, color: '#ce0404'}" spinner-key="spinner-main"></span>
+        <span class="spinner" us-spinner="{radius:40, width:10, length: 1, color: '#0076a3', trail:90, hwaccel: true, corners:0.5}" spinner-key="spinner-main">
+            <img src="img/logo.png" style="height: 50px;position: absolute;left:50%;top:50%;margin: -25px 0 0 -25px;"/>
+        </span>
     </div>
     <div class="header mobile-header">
         <div class="container">
@@ -43,29 +45,48 @@
 
     <div id="detail-overlay" class="main-view"></div>
 
+    <div class="site-hide"></div>
     <div class="site">
-        <header class="header">
-            <div class="container-fluid">
-                <nav class="col-sm-12">
-                    <div class="top_logo">
-                        <img src="img/logo.png" class=""/>
-                    </div>
-                    <div class="top_sub_logo">
-                        <img src="img/nri.png" class=""/>
-                    </div>
-                </nav>
-            </div>
-        </header>
+        <div class="upper-page">
+            <header class="header start">
+                <div class="container-fluid">
+                    <nav class="col-sm-12">
+                        <div class="head-cell">
+                            <div class="top_logo">
+                                <img src="img/logo.png" class=""/>
+                            </div>
+                            <div class="top_sub_logo">
+                                <img src="img/nri.png" class=""/>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </header>
 
-            <div class="container-fluid">
-                <div ng-view class="main-view" id="main"></div>
-                <div class="main-view" id="main-alt"></div>
-            </div>
+            <div ng-view class="main-view" id="main"></div>
+            <div class="main-view" id="main-alt"></div>
+        </div>
 
         <footer class="container-fluid main-footer">
             <div class="container">
-                <div class="col-sm-12">
-                    FOOTER
+                <div class="col-sm-6">
+                    <div class="footer-text">
+                        <h4>Need something? <strong>Let me know!</strong></h4>
+                        <br/>
+                        <p>Lets discuss the details over some coffee. <br/>Send me a little bit of info about what you're thinking <br/>and we can get down to business.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="footer-text">
+                        <h5>Location:</h5>
+                        <span>Huntington Beach, CA, USA</span>
+                        <hr/>
+                        <h5>Email:</h5>
+                        <span><a href="mailto:nick.rick.interactive@gmail.com" target="_blank">nick.rick.interactive@gmail.com</a></span>
+                        <hr/>
+                        <h5>LinkedIn:</h5>
+                        <span><a href="http://www.linkedin.com/in/nickrickenbach" target="_blank">http://www.linkedin.com/in/nickrickenbach</a></span>
+                    </div>
                 </div>
             </div>
         </footer>
