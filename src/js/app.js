@@ -42,6 +42,21 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
     });
 }]);
 
+app.directive('workimg',function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            console.log('found');
+            element.find('img.bg-img-hide').bind('load', function() {
+                element.removeClass("inactive");
+                //TweenMax.to(element,1,{opacity:1});
+                TweenMax.to(element.parent().parent().find(".spinner"),1,{opacity:0});
+                $(".site").scroll($rootScope.workScroll);
+            });
+        }
+    };
+});
+
 
 
 function getResolve(_url) {

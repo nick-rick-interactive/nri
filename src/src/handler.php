@@ -70,6 +70,7 @@ if(isset($_GET['section'])) {
                       p.*,
                       i.url AS 'banner_url',
                       c.name AS 'client_name',
+                      c.url AS 'client_url',
                       ci.url AS 'client_img_url'
                     FROM
                       projects AS p

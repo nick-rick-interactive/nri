@@ -44,7 +44,7 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
         $("#detail-overlay").html($(this).html());
         //window.location.href = "#work/good";
     }
-    function workScroll(){
+    $rootScope.workScroll = function(){
         var i = 0;
         var wh = $(window).height();
         var so = $(".site").offset().top;
@@ -143,10 +143,10 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
             i = (i==0) ? 1 : 0;
             //$(this).bind("transitionend webkitTransitionEnd oTransitionEnd",workScroll);
         });
-        $(".site").scroll(workScroll);
-        $(document).resize(workScroll);
-        $(document).bind("orientationchange",workScroll);
-        setTimeout(workScroll,100);
+        $(".site").scroll($rootScope.workScroll);
+        $(document).resize($rootScope.workScroll);
+        $(document).bind("orientationchange",$rootScope.workScroll);
+        setTimeout($rootScope.workScroll,100);
     });
 };
 HomeController.resolve = getResolve('src/handler.php?section=home');

@@ -351,6 +351,9 @@ input,textarea{
     padding-right: 0;
     .transition(all, 0.3s, ease);
   }
+  .sontainer-fluid{
+    padding: 0;
+  }
 }
 .work-block{
   position: relative;
@@ -365,7 +368,8 @@ input,textarea{
   overflow: hidden;
   zoom:1;
   cursor: pointer;
-  .transition(none);
+  .transition(height 0.3s ease);
+  .transition(opacity 0.3s ease);
   //.rotateY(0deg);
   //.transform-origin(0% 50%);
   //.transition(transform 0.5 ease);
@@ -438,7 +442,18 @@ input,textarea{
       }
     }
     strong{
+      display: inline-block;
       color: @lightBlue;
+      position: absolute;
+      right: 20px;
+      font-size: 50px;
+      top:50%;
+      margin-top: -40px;
+      @media @scr-xs{
+        right: 10px;
+        font-size: 30px;
+        margin-top: -30px;
+      }
     }
     .wb-row{
       display: table-row;
@@ -494,6 +509,9 @@ input,textarea{
       height:100%;
     }
   }
+  .bg-img-hide{
+    display: none;
+  }
   &.alt{
     .cover-grad{
       left:0;
@@ -530,6 +548,12 @@ input,textarea{
       height:200px;
     }
   }
+  &.inactive{
+    height: 50px;
+    opacity: 0;
+    .transition(height 0.3s ease);
+    .transition(opacity 0.3s ease);
+  }
 }
 
 
@@ -538,7 +562,89 @@ input,textarea{
   .detail_header_banner{
     display: block;
     width: 100%;
-    height: 500px;
+    height: 300px;
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position:0 50%;
+  }
+  .detail_info{
+    display: block;
+    background-color: @blue;
+    color: @white;
+    text-align: center;
+    .box-sizing(border-box);
+    padding:60px 30px;
+    h1{
+      display: inline-block;
+      font-size: 80px;
+      width: 100%;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .detail_client{
+      img{
+        max-height: 125px;
+        max-width: 400px;
+        @media @scr-md{
+          max-height: 50px;
+          max-width: 200px;
+        }
+      }
+      &:hover{
+        .opacity(0.8);
+      }
+    }
+  }
+  .detail_technologies{
+    position: relative;
+    display: inline-block;
+    background-color: @red;
+    .box-sizing(border-box);
+    color: @white;
+    padding:60px 30px;
+    h3{
+      display: inline-block;
+      font-size: 50px;
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+    .tech_container{
+      .box-sizing(border-box);
+    }
+    .detail_technology{
+      display: table;
+      .transWhiteBG(0.2);
+      font-size: 30px;
+      .box-sizing(border-box);
+      padding:10px;
+      margin: 10px;
+      width: 100%;
+      min-height: 110px;
+      .tech_img{
+        display: table-cell;
+        vertical-align: middle;
+        padding: 10px;
+        text-align: left;
+        width: 70px;
+      }
+      strong{
+        display: table-cell;
+        vertical-align: middle;
+        padding: 10px;
+        text-align: left;
+        color: @white;
+      }
+      text-decoration: none;
+      &:hover{
+        .transBlackBG(0.4);
+        strong{
+          color:@lightRed;
+        }
+      }
+    }
   }
 }
 

@@ -2,4 +2,23 @@
     <div class="detail_header_banner" style="background-image:url('img/{{project.banner_url}}');">
 
     </div>
+    <div class="detail_info">
+        <h1 class="detail_title">{{project.name}}</h1>
+        <a href="{{project.client_url}}" target="_blank" title="{{project.client_name}}" class="detail_client">
+            <img src="img/{{project.client_img_url}}" alt="{{project.client_name}}" />
+        </a>
+    </div>
+    <div class="container">
+        <div class="detail_technologies">
+            <h3>Technology Used</h3>
+            <div class="col-md-6 tech_container" data-ng-repeat="technology in project.technologies">
+                <a href="{{technology.url}}" target="_blank" class="detail_technology">
+                    <div class="tech_img">
+                        <img src="img/{{technology.tech_img}}" alt="{{technology.alt}}" class="tech_img">
+                    </div>
+                    <strong>{{technology.name}}</strong>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>

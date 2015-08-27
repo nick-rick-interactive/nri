@@ -49407,7 +49407,7 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
         $("#detail-overlay").html($(this).html());
         //window.location.href = "#work/good";
     }
-    function workScroll(){
+    $rootScope.workScroll = function(){
         var i = 0;
         var wh = $(window).height();
         var so = $(".site").offset().top;
@@ -49506,10 +49506,10 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
             i = (i==0) ? 1 : 0;
             //$(this).bind("transitionend webkitTransitionEnd oTransitionEnd",workScroll);
         });
-        $(".site").scroll(workScroll);
-        $(document).resize(workScroll);
-        $(document).bind("orientationchange",workScroll);
-        setTimeout(workScroll,100);
+        $(".site").scroll($rootScope.workScroll);
+        $(document).resize($rootScope.workScroll);
+        $(document).bind("orientationchange",$rootScope.workScroll);
+        setTimeout($rootScope.workScroll,100);
     });
 };
 HomeController.resolve = getResolve('src/handler.php?section=home');
@@ -49518,7 +49518,7 @@ HomeController.resolve = getResolve('src/handler.php?section=home');
  * Created by nickrickenbach on 8/11/15.
  */
 function WorkController ($scope, $http, $sce, $routeParams, datasets) {
-    //console.log(datasets)
+    console.log(datasets)
     $scope.project = datasets.project;
 
     $scope.$on('$viewContentLoaded', function() {
@@ -49572,6 +49572,21 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
 
     });
 }]);
+
+app.directive('workimg',function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            console.log('found');
+            element.find('img.bg-img-hide').bind('load', function() {
+                element.removeClass("inactive");
+                //TweenMax.to(element,1,{opacity:1});
+                TweenMax.to(element.parent().parent().find(".spinner"),1,{opacity:0});
+                $(".site").scroll($rootScope.workScroll);
+            });
+        }
+    };
+});
 
 
 
