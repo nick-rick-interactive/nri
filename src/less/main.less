@@ -2,6 +2,7 @@
 @import "html5bp.less";
 
 /* SCREEN SIZES */
+@scr-xl:   ~"only screen and (min-width: 1200px)";
 @scr-lg:   ~"only screen and (max-width: 1200px)";
 @scr-md:   ~"only screen and (max-width: 992px)";
 @scr-sm:   ~"only screen and (max-width: 768px)";
@@ -566,6 +567,9 @@ input,textarea{
     background-size:cover;
     background-repeat: no-repeat;
     background-position:0 50%;
+    @media @scr-xl{
+      height: 400px;
+    }
   }
   .detail_info{
     display: block;
@@ -595,6 +599,37 @@ input,textarea{
       }
     }
   }
+  .detail_video_container{
+    display: block;
+    position: relative;
+    width: 100%;
+    background-color: @black;
+    .col-md-12{
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .detail_video{
+      width: 100%;
+      display: block;
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      video{
+        position: absolute;
+        left:50%;
+        top:50%;
+        width:1280px;
+        height: 720px;
+        margin: -360px 0 0 -640px;
+      }
+    }
+  }
+  .detail_tech_container{
+    @media @scr-md{
+        padding-left: 0;
+        padding-right: 0;
+    }
+  }
   .detail_technologies{
     position: relative;
     display: inline-block;
@@ -602,6 +637,12 @@ input,textarea{
     .box-sizing(border-box);
     color: @white;
     padding:60px 30px;
+    @media @scr-md{
+      .container{
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
     h3{
       display: inline-block;
       font-size: 50px;
@@ -613,6 +654,10 @@ input,textarea{
     }
     .tech_container{
       .box-sizing(border-box);
+      @media @scr-md{
+          padding-left: 0;
+          padding-right: 0;
+      }
     }
     .detail_technology{
       display: table;
