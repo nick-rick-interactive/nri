@@ -4,6 +4,7 @@
             <div class="work-container" data-ng-repeat="project in projects" ng-class-even="'alt'" ng-mouseover="workOver" ng-click="workClick" ng-mouseleave="workOut">
                 <div class="container">
                     <a href="#work/{{project.slug}}" workimg class="work-block inactive col-md-12" style="background-image:url('img/{{project.banner_url}}');" ng-class-even="'alt'">
+                        <div class="wb-bg" style="background-image:url('img/{{project.banner_url}}');"></div>
                         <div class="wb-info">
                             <div class="wb-tech">
                                 <img src="img/{{tech.tech_img}}" title="HTML 5" alt="{{tech.alt}}" data-ng-repeat="tech in project.technologies"/>

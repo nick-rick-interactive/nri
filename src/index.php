@@ -48,6 +48,7 @@
     <div class="site-hide"></div>
     <div class="site">
         <div class="upper-page">
+            <div class="tr-lock"><img src="img/tr_lock.png"/></div>
             <header class="header start">
                 <div class="container-fluid">
                     <nav class="col-sm-12">
@@ -68,6 +69,7 @@
         </div>
 
         <footer class="container-fluid main-footer">
+            <div class="bl-lock"><img src="img/bl_lock.png"/></div>
             <div class="container">
                 <div class="col-sm-6">
                     <div class="footer-text">

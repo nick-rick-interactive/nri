@@ -1,34 +1,53 @@
 <div class="detail_container">
-    <div class="detail_header_banner" style="background-image:url('img/{{project.banner_url}}');">
-
+    <div class="detail_header_banner">
+        <div class="detail_header_bg" style="background-image:url('img/{{project.banner_url}}');"></div>
+        <div class="detail_info">
+            <h1 class="detail_title">{{project.name}}</h1>
+            <a href="{{project.client_url}}" target="_blank" title="{{project.client_name}}" class="detail_client">
+                <img src="img/{{project.client_img_url}}" alt="{{project.client_name}}" />
+            </a>
+        </div>
     </div>
-    <div class="detail_info">
-        <h1 class="detail_title">{{project.name}}</h1>
-        <a href="{{project.client_url}}" target="_blank" title="{{project.client_name}}" class="detail_client">
-            <img src="img/{{project.client_img_url}}" alt="{{project.client_name}}" />
-        </a>
-    </div>
-    <div class="detail_video_container">
+    <div class="detail_video_container" data-ng-if="project.video_url">
         <div class="container">
             <div class="col-md-12">
                 <div class="detail_video">
                     <video width="1280" height="720" class="detail_vid_player" id="detail_vid_player" autoplay loop>
-                        <source src="video/scr-rec-mc_.mp4" type="video/mp4" />
+                        <source src="{{project.video_url}}" />
                     </video>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container detail_tech_container">
-        <div class="detail_technologies">
-            <h3>Technology Used</h3>
-            <div class="col-md-6 tech_container" data-ng-repeat="technology in project.technologies">
-                <a href="{{technology.url}}" target="_blank" class="detail_technology">
-                    <div class="tech_img">
-                        <img src="img/{{technology.tech_img}}" alt="{{technology.alt}}" class="tech_img">
+    <div class="container-fluid detail_info_description">
+        <div class="detail_title_holder">
+            <h2>{{project.short_desc}}</h2>
+        </div>
+        <div class="detail_info_block" data-ng-repeat="detail in project.details">
+            <div class="detail_img" style="background-image:url('img/{{detail.detail_img}}')"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 detail_info_copy" data-ng-class-even="'col-md-push-6'">
+                        <p>
+                            {{detail.text}}
+                        </p>
                     </div>
-                    <strong>{{technology.name}}</strong>
-                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container detail_tech_container">
+        <div class="container">
+            <div class="detail_technologies">
+                <h3>Technology Used</h3>
+                <div class="col-md-6 tech_container" data-ng-repeat="technology in project.technologies">
+                    <a href="{{technology.url}}" target="_blank" class="detail_technology">
+                        <div class="tech_img">
+                            <img src="img/{{technology.tech_img}}" alt="{{technology.alt}}" class="tech_img">
+                        </div>
+                        <strong>{{technology.name}}</strong>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

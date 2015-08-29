@@ -107,6 +107,31 @@ if(isset($_GET['section'])) {
                 array_push($row['technologies'],$trow);
             }
 
+            $dsql = "SELECT
+                          d.*,
+                          i.url AS 'detail_img'
+                        FROM
+                          project_detail AS d
+                          LEFT JOIN images AS i ON d.img = i.id
+                        WHERE EXISTS(
+                            SELECT
+                              *
+                            FROM
+                              assoc AS a
+                            WHERE
+                              a.key_field = 'projects' AND
+                              a.key_val = '".$row['id']."' AND
+                              a.value_field = 'project_detail' AND
+                              a.value_val = d.id
+                        )
+                        GROUP BY d.id";
+            $dres = mysqli_query($db,$dsql);
+            $row['details'] = array();
+
+            while($drow = mysqli_fetch_assoc($dres)){
+                array_push($row['details'],$drow);
+            }
+
             $out['project'] = $row;
             break;
     }
