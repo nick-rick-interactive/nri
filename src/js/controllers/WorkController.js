@@ -4,6 +4,9 @@
 function WorkController ($scope, $http, $sce, $routeParams, datasets) {
     var video;
     $scope.project = datasets.project;
+    $scope.trustHTML = function(_html){
+        return $sce.trustAsHtml(_html);
+    }
 
     $scope.$on('$viewContentLoaded', function() {
         prevView = $("#main").html();
