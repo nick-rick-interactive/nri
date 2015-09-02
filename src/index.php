@@ -45,7 +45,7 @@
 
     <div id="detail-overlay" class="main-view"></div>
 
-    <div class="site-hide"></div> 
+    <div class="site-hide"></div>
     <div class="site">
         <div class="upper-page">
             <div class="tr-lock"><img src="img/tr_lock.png"/></div>
