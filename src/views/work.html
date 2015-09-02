@@ -8,11 +8,11 @@
             </a>
         </div>
     </div>
-    <div class="detail_video_container" data-ng-if="project.video_url">
+    <div class="detail_video_container hidden-xs hidden-sm" data-ng-if="project.video_url">
         <div class="container">
             <div class="col-md-12">
                 <div class="detail_video">
-                    <video width="1280" height="720" class="detail_vid_player" id="detail_vid_player" autoplay loop>
+                    <video width="1280" height="720" class="detail_vid_player hidden-xs hidden-sm" id="detail_vid_player" autoplay loop>
                         <source src="{{project.video_url}}" />
                     </video>
                 </div>

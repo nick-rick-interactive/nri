@@ -412,6 +412,7 @@ input,textarea{
   overflow: hidden;
   zoom:1;
   cursor: pointer;
+  .blur(0.0000001px);
   .transition(height 0.3s ease);
   .transition(opacity 0.3s ease);
   //.rotateY(0deg);
@@ -597,6 +598,9 @@ input,textarea{
     //height:400px;
     .wb-bg{
       .blur(5px);
+      @media @scr-md{
+        .blur(0);
+      }
     }
     .wb-info{
       left:0;
@@ -799,7 +803,7 @@ input,textarea{
       padding:10px;
       margin: 10px 0;
       width: 100%;
-      min-height: 110px;
+      min-height: 130px;
       @media @scr-sm{
         min-height: 70px;
       }

@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js" lang="" ng-app="BLANG">
+<html class="no-js" lang="" ng-app="nri">
     <head>
         <?php if(strpos($_SERVER['HTTP_HOST'],"localhost")!==FALSE){ ?>
             <base href="/nri/dist/">
         <?php }else{ ?>
-            <base href="/nri/dist">
+            <base href="/">
         <?php } ?>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">

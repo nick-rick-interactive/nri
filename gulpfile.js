@@ -141,12 +141,16 @@ gulp.task('lint:js', function () {
 
 gulp.task('compile', [
     'compile:js',
-    'compile:less'
+    'compile:less',
+    'compile:js-admin',
+    'compile:less-admin'
 ]);
 
 gulp.task('compile:dev', [
     'compile:js:dev',
-    'compile:less'
+    'compile:less',
+    'compile:js-admin',
+    'compile:less-admin'
 ]);
 
 gulp.task('compile:less', function () {
@@ -157,19 +161,27 @@ gulp.task('compile:less', function () {
         .pipe(gulp.dest(dirs.dist + '/css'))
         .pipe(browserSync.stream());
 });
+gulp.task('compile:less-admin', function () {
+    return gulp.src([dirs.src + '/less/main.less', dirs.src + '/nriadmin/less/main.less'])
+        .pipe(plugins.less({
+            plugins:[banner, cleancss]
+        }))
+        .pipe(gulp.dest(dirs.dist + '/nriadmin/css'))
+        .pipe(browserSync.stream());
+});
 
 gulp.task('compile:js', function () {
     return gulp.src([
         dirs.src + '/js/vendor/modernizr-2.8.3.min.js',
-        'bower_components/jquery/dist/jquery.js',
-        'bower_components/bootstrap/dist/js/bootstrap.js',
+        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'bower_components/spin.js/spin.js',
-        'bower_components/greensock-js/src/uncompressed/TweenMax.js',
-        'bower_components/angular/angular.js',
-        'bower_components/angular-route/angular-route.js',
-        'bower_components/angular-resource/angular-resource.js',
-        'bower_components/angular-sanitize/angular-sanitize.js',
-        'bower_components/angular-spinner/angular-spinner.js',
+        'bower_components/greensock-js/src/minified/TweenMax.min.js',
+        'bower_components/angular/angular.min.js',
+        'bower_components/angular-route/angular-route.min.js',
+        'bower_components/angular-resource/angular-resource.min.js',
+        'bower_components/angular-sanitize/angular-sanitize.min.js',
+        'bower_components/angular-spinner/angular-spinner.min.js',
         dirs.src + '/js/controllers/*.js',
         dirs.src + '/js/app.js',
         dirs.src + '/js/main.js'
@@ -179,6 +191,29 @@ gulp.task('compile:js', function () {
         .pipe(rename('main.js'))
         .pipe(plugins.uglify({ mangle:false }))
         .pipe(gulp.dest(dirs.dist + '/js'));
+});
+
+gulp.task('compile:js-admin', function () {
+    return gulp.src([
+        dirs.src + '/js/vendor/modernizr-2.8.3.min.js',
+        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'bower_components/spin.js/spin.js',
+        'bower_components/greensock-js/src/minified/TweenMax.min.js',
+        'bower_components/angular/angular.min.js',
+        'bower_components/angular-route/angular-route.min.js',
+        'bower_components/angular-resource/angular-resource.min.js',
+        'bower_components/angular-sanitize/angular-sanitize.min.js',
+        'bower_components/angular-spinner/angular-spinner.min.js',
+        dirs.src + 'nriadmin/js/controllers/*.js',
+        dirs.src + 'nriadmin/js/app.js',
+        dirs.src + 'nriadmin/js/main.js'
+    ])
+        .pipe(concat('concat.js'))
+        .pipe(gulp.dest(dirs.dist + '/nriadmin/js'))
+        .pipe(rename('main.js'))
+        .pipe(plugins.uglify({ mangle:false }))
+        .pipe(gulp.dest(dirs.dist + '/nriadmin/js'));
 });
 
 gulp.task('compile:js:dev', function () {
@@ -205,6 +240,7 @@ gulp.task('compile:js:dev', function () {
 
 gulp.task('compile:js-watch', ['compile:js'], browserSync.reload);
 gulp.task('compile:js-watch:dev', ['compile:js:dev'], browserSync.reload);
+gulp.task('compile:js-watch:admin', ['compile:js-admin'], browserSync.reload);
 gulp.task('compile:views-watch', ['copy:misc'], browserSync.reload);
 
 /* SERVER */
@@ -220,6 +256,11 @@ gulp.task('serve', function () {
     gulp.watch(dirs.src + '/index.php', ['compile:views-watch']);
     gulp.watch(dirs.src + '/views/*', ['compile:views-watch']);
     gulp.watch(dirs.src + '/src/*', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/less/main.less', ['compile:less-admin']);
+    gulp.watch(dirs.src + '/nriadmin/index.php', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/views/*', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/src/*', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/js/**/*.js', ['compile:js-watch:admin']);
 
 });
 
@@ -234,6 +275,11 @@ gulp.task('serve-dev', function () {
     gulp.watch(dirs.src + '/index.php', ['compile:views-watch']);
     gulp.watch(dirs.src + '/views/*', ['compile:views-watch']);
     gulp.watch(dirs.src + '/src/*', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/less/main.less', ['compile:less-admin']);
+    gulp.watch(dirs.src + '/nriadmin/index.php', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/views/*', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/src/*', ['compile:views-watch']);
+    gulp.watch(dirs.src + '/nriadmin/js/**/*.js', ['compile:js-watch:admin']);
 
 });
 

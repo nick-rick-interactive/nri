@@ -1,23 +1,25 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: nickrickenbach
- * Date: 5/29/15
- * Time: 12:09 PM
- * https://codex.wordpress.org/Template_Tags/get_posts
- */
+* Created by PhpStorm.
+* User: nickrickenbach
+* Date: 5/29/15
+* Time: 12:09 PM
+*/
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include("lib/library.php");
-include("config/config.php");
+include("../../src/lib/library.php");
+include("../../src/config/config.php");
 
 $out = array();
 
 if(isset($_GET['section'])) {
     switch ($_GET['section']) {
         case "home":
+
+            break;
+        case "projects":
             $sql = "SELECT
                       p.*,
                       i.url AS 'banner_url',
@@ -30,7 +32,7 @@ if(isset($_GET['section'])) {
                       LEFT JOIN images AS i ON i.id = p.banner
                     GROUP BY p.id
                     ORDER BY p.timestamp
-                    LIMIT 5,5";
+                    LIMIT 5";
 
             $res = mysqli_query($db,$sql);
             $out['projects'] = array();
@@ -65,7 +67,7 @@ if(isset($_GET['section'])) {
                 array_push($out['projects'],$row);
             }
             break;
-        case "work":
+        case "project":
             $sql = "SELECT
                       p.*,
                       i.url AS 'banner_url',
@@ -136,5 +138,10 @@ if(isset($_GET['section'])) {
             break;
     }
 }
+if(isset($_POST['section'])) {
+    switch ($_POST['section']) {
+        case "home":
 
-echo json_encode($out);
+            break;
+    }
+}

@@ -1,7 +1,7 @@
 /**
  * Created by nickrickenbach on 8/11/15.
  */
-var app = angular.module('nri', ['ngRoute', 'ngResource', 'ngSanitize', 'angularSpinner']);
+var app = angular.module('BLANG', ['ngRoute', 'ngResource', 'ngSanitize', 'angularSpinner']);
 
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -15,9 +15,14 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             controller: HomeController,
             resolve: HomeController.resolve
         })
-        .when('/work/:work', {
-            templateUrl: 'views/work.html',
-            controller: WorkController,
+        .when('/projects', {
+            templateUrl: 'views/projects.html',
+            controller: ProjectsController,
+            resolve: WorkController.resolve
+        })
+        .when('/projects/:project', {
+            templateUrl: 'views/project.html',
+            controller: ProjectController,
             resolve: WorkController.resolve
         })
         .otherwise({
@@ -42,7 +47,7 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
     });
 }]);
 
-app.directive('workimg',function($rootScope){
+app.directive('workimg',function(){
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -62,7 +67,7 @@ app.directive('workimg',function($rootScope){
 function getResolve(_url) {
     return {
         datasets  : function ($rootScope, $q, $http, $location, $route) {
-            _url = ($route.current.params.work) ? _url+"&project="+$route.current.params.work : _url;
+            _url = ($route.current.params.project) ? _url+"&project="+$route.current.params.project : _url;
             if (TweenMax) {
                 // showLoader
                 TweenMax.to($('#main-overlay'), 0.2, { autoAlpha:1 });
@@ -87,42 +92,18 @@ function getResolve(_url) {
                 var deferred = $q.defer();
                 TweenMax.to($(".site"),0.5,{scrollTop:0,onComplete:function() {
 
-                $("#main-alt").css({display:"block",top:0,left:"0",position:"relative"}).html($("#main").html());
-                $("#main").css({left:"100%",position:"absolute"}).html("");
-
 
                     $http.get(_url).
                         success(function (data, status, headers, config) {
                             // hide Loader
-                                TweenMax.to($('#main-overlay'), 0.2, {autoAlpha: 0,delay:0.3});
-                                TweenMax.to($('#main-overlay').find('span'), 0.5, {
-                                    marginTop: '-130px',
-                                    rotationX: -90,
-                                    opacity: 0,
-                                    ease: 'Cubic.easeInOut',
-                                    onComplete:function() {
-                                        $("#main").css({top: "0", position: "relative"});
-                                        var off = ($("#main").offset()) ? $("#main").offset().top : 0;
-                                        $("#main-alt").css({top: off + "px", position: "absolute"});
+                            TweenMax.to($('#main-overlay'), 0.5, {autoAlpha: 0});
+                            TweenMax.to($('#main-overlay').find('span'), 0.5, {
+                                marginTop: '-130px',
+                                rotationZ: -180,
+                                ease: 'Cubic.easeInOut'
+                            });
+                            deferred.resolve(data);
 
-                                        //show angular data
-                                        deferred.resolve(data);
-
-                                        setTimeout(function () {
-                                            $("#main").css({left: "100%"});
-                                            TweenMax.to($("#main"), 0.5, {left: "0", ease: "Expo.easeInOut"});
-                                            //$(".site-hide").css({height:$("#main").height()+"px"});
-                                            TweenMax.to($("#main-alt"), 0.5, {
-                                                left: "-100%",
-                                                ease: "Expo.easeInOut",
-                                                delay: 0.1,
-                                                onComplete: function () {
-                                                    $("#main-alt").html("").css({display:"none"});
-                                                }
-                                            });
-                                        }, 10);
-                                    }
-                                });
                         }).
                         error(function (data, status, headers, config) {
                             // hide Loader
