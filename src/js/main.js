@@ -8,12 +8,12 @@ function headerSwap() {
         if(isTop){
             isTop = false;
             TweenMax.set($(".mobile-header"),{marginTop:"-100px"});
-            TweenMax.to($(".mobile-header"),0.3,{marginTop:"0",padding:"5px 20px"});
+            TweenMax.to($(".mobile-header"),0.1,{marginTop:"0",padding:"5px 20px"});
         }
     }else{
         if(!isTop){
             isTop = true;
-            TweenMax.to($(".mobile-header"),0.2,{marginTop:"-100px",padding:""});
+            TweenMax.to($(".mobile-header"),0.1,{marginTop:"-100px",padding:""});
         }
     }
 }

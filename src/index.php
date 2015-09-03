@@ -34,7 +34,7 @@
         <div class="container">
             <div class="col-sm-12">
                 <div class="top_logo">
-                    <img src="img/logo.png" class=""/>
+                    <a href="#/"><img src="img/logo.png" class=""/></a>
                 </div>
                 <div class="top_sub_logo">
                     <img src="img/nri.png" class=""/>
@@ -54,7 +54,7 @@
                     <nav class="col-sm-12">
                         <div class="head-cell">
                             <div class="top_logo">
-                                <img src="img/logo.png" class=""/>
+                                <a href="#/"><img src="img/logo.png" class=""/></a>
                             </div>
                             <div class="top_sub_logo">
                                 <img src="img/nri.png" class=""/>
