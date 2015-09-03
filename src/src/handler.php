@@ -30,7 +30,7 @@ if(isset($_GET['section'])) {
                       LEFT JOIN images AS i ON i.id = p.banner
                     GROUP BY p.id
                     ORDER BY p.timestamp
-                    ";
+                    LIMIT 5,5";
 
             $res = mysqli_query($db,$sql);
             $out['projects'] = array();

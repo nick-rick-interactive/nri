@@ -557,7 +557,7 @@ input,textarea{
     }
   }
   .cover-grad{
-    display: block;
+    display: none;
     width: 100%;
     height: 100%;
     top:0;
@@ -796,6 +796,7 @@ input,textarea{
       }
     }
     .detail_technology{
+      position: relative;
       display: table;
       .transWhiteBG(0.2);
       font-size: 30px;
@@ -803,8 +804,9 @@ input,textarea{
       padding:10px;
       margin: 10px 0;
       width: 100%;
-      min-height: 130px;
+      height: 130px;
       @media @scr-sm{
+        height: auto;
         min-height: 70px;
       }
       .tech_img{

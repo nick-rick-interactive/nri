@@ -798,25 +798,25 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
                 rotY = 0;
                 $(this).attr("data-new","inside");
                 op = 0;
-                TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:0 });
+                //TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:0 });
             }else{
                 if(sp<=p2o&&sp>=p2){ // INSIDE TOP
                     $(this).attr("data-new","inside");
                     rotY = 0;
                     op = 0;
                     rotY = (i==0) ? 90-(prc1*90) : -90+(prc1*90);
-                    TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:(1-prc1) });
+                    //TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:(1-prc1) });
                 }else if(sp<=p1o&&sp>=p1){ // INSIDE BOTTOM
                     $(this).attr("data-new","inside");
                     rotY = 0;
                     op = 0;
                     rotY = (i==0) ? 90-(prc2*90) : -90+(prc2*90);
-                    TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:(1-prc2) });
+                    //TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:(1-prc2) });
                 }else{ // OUTSIDE
                     $(this).attr("data-new","out");
                     rotY = (i==0) ? 90 : -90;
                     op = 1;
-                    TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:1 });
+                    //TweenMax.to($(this).find(".cover-grad"), 0.4, { opacity:1 });
                 }
             }
 
@@ -832,7 +832,11 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
                     ease: "Expo.easeInOut"
                 });*/
             }
-            TweenMax.to($(this), 0.2, { rotationY:rotY, transformOrigin:to, transformPerspective:600 });
+            if(rotY==0||rotY==90||rotY==-90){
+                //TweenMax.set($(this),  { rotationY:rotY, transformOrigin:to, transformPerspective:600 });
+            }else{
+                //TweenMax.to($(this), 0.2, { rotationY:rotY, transformOrigin:to, transformPerspective:600 });
+            }
             //TweenMax.set($(this).find(".work-bg-img"), { css:{transform:"translateY(" + (0-wh-(ot-st-wh/6))/1.5 + "px)" }});
             //TweenMax.to($(this).find(".work-bg-img"), 0.2, { css:{transform:"translateY(" + ((ot-st-wh/6)) + "px)" }});
             //TweenMax.to($(this).find(".cover-grad"), 0.2, { /*width:((1-perc)*100)+"%",*/ opacity:(1-perc) });
