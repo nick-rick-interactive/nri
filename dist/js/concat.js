@@ -713,22 +713,46 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
  * Created by nickrickenbach on 8/11/15.
  */
 function HomeController ($rootScope, $scope, $http, $sce, datasets) {
-    console.log(datasets.projects);
 
     $scope.projects = datasets.projects;
+    $scope.isMobile = false;
     /*$scope.trustHTML = function(_html){
         return $sce.trustAsHtml(_html);
     }*/
     $("body").append($("<hr class='marker m1'/>"));
     $("body").append($("<hr class='marker m2'/>"));
 
-    $scope.workOver = function(){
-        //TweenMax.to($(this), 0.5, {rotationY:0});
-    }
-    $scope.workOut = function(){
-        workScroll();
-    }
-    $scope.workClick = function(){
+    /**
+     * Project mouse over
+     * @param $event project object
+     */
+    $scope.workOver = function($event){
+        var project = $("#proj"+$event.id);
+        TweenMax.killTweensOf(project);
+        var to = (!project.hasClass("alt")) ? "left 50%" : "right 50%";
+        //TweenMax.to(project,0.5,{ transformPerspective:600, transformOrigin:to, rotationY:"0",ease:"Back.easeInOut"});
+    };
+
+
+    /**
+     * Project mouse out
+     * @param $event project object
+     */
+    $scope.workOut = function($event){
+        var project = $("#proj"+$event.id);
+        TweenMax.killTweensOf(project);
+        var to = (!project.hasClass("alt")) ? "left 50%" : "right 50%";
+        var rot = (project.hasClass("alt")) ? "-20" : "20";
+        rot = $scope.isMobile ? 0 : rot;
+        //TweenMax.to(project,0.3,{ transformPerspective:600, transformOrigin:to, rotationY:rot,ease:"Cubic.easeInOut"});
+    };
+
+
+    /**
+     * Project mouse click
+     * @param $event project object
+     */
+    $scope.workClick = function($event){
         var wh = $(window).height();
         var ww = $(window).width();
         var o = $(this).offset();
@@ -754,7 +778,19 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
         }
         $("#detail-overlay").html($(this).html());
         //window.location.href = "#work/good";
+    };
+
+    $scope.projectsSizeAdjust = function(){
+        var w = $(window).width();
+        $scope.isMobile = (w<768);
+        for(var project in $scope.projects){
+            $scope.workOut(project);
+        }
     }
+
+    /**
+     * possible scroll calculations
+     */
     $rootScope.workScroll = function(){
         var i = 0;
         var wh = $(window).height();
@@ -774,7 +810,6 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
 
         $(".work-block").each(function(){
             var ot = Math.round($(this).offset().top)+st;
-            //console.log(ot);
 
             // Enter points
             var p1 = ot+m1;
@@ -858,10 +893,12 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
             i = (i==0) ? 1 : 0;
             //$(this).bind("transitionend webkitTransitionEnd oTransitionEnd",workScroll);
         });
-        $(".site").scroll($rootScope.workScroll);
-        $(document).resize($rootScope.workScroll);
-        $(document).bind("orientationchange",$rootScope.workScroll);
-        setTimeout($rootScope.workScroll,100);
+        //$(".site").scroll($rootScope.workScroll);
+        //$(document).resize($rootScope.workScroll);
+        //$(document).bind("orientationchange",$rootScope.workScroll);
+        $(window).bind("resize",$scope.projectsSizeAdjust);
+        $(window).bind("orientationchange",$scope.projectsSizeAdjust);
+        setTimeout($scope.projectsSizeAdjust,100);
     });
 };
 HomeController.resolve = getResolve('src/handler.php?section=home');
@@ -940,7 +977,6 @@ app.directive('workimg',function($rootScope){
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            console.log('found');
             element.find('img.bg-img-hide').bind('load', function() {
                 element.removeClass("inactive");
                 //TweenMax.to(element,1,{opacity:1});

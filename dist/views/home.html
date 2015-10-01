@@ -1,9 +1,9 @@
 <div class="section">
     <div class="">
         <div class="work-blocks">
-            <div class="work-container" data-ng-repeat="project in projects" ng-class-even="'alt'" ng-mouseover="workOver" ng-click="workClick" ng-mouseleave="workOut">
+            <div class="work-container" data-ng-repeat="project in projects" ng-class-even="'alt'">
                 <div class="container">
-                    <a href="#work/{{project.slug}}" workimg class="work-block inactive col-md-12" style="background-image:url('img/{{project.banner_url}}');" ng-class-even="'alt'">
+                    <a href="#work/{{project.slug}}" workimg class="work-block inactive col-md-12" style="background-image:url('img/{{project.banner_url}}');" ng-class-even="'alt'" ng-mouseover="workOver(project)" ng-click="workClick(project)" ng-mouseleave="workOut(project)" id="proj{{project.id}}">
                         <div class="wb-bg" style="background-image:url('img/{{project.banner_url}}');"></div>
                         <div class="wb-info">
                             <div class="wb-tech">

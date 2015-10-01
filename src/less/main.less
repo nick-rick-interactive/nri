@@ -415,7 +415,7 @@ input,textarea{
   .blur(0.0000001px);
   .transition(height 0.3s ease);
   .transition(opacity 0.3s ease);
-  //.rotateY(0deg);
+  //.rotateY(40deg);
   //.transform-origin(0% 50%);
   //.transition(transform 0.5 ease);
   //.perspective(600);
@@ -423,7 +423,7 @@ input,textarea{
     //.rotateY(90deg);
   }
   &.alt{
-    //.rotateY(0deg);
+    //.rotateY(-40deg);
     //.transform-origin(100% 50%);
     &.out{
       //.rotateY(-90deg);
@@ -596,6 +596,7 @@ input,textarea{
   }
   &:hover{
     //height:400px;
+    .rotateY(0deg);
     .wb-bg{
       .blur(5px);
       @media @scr-md{
@@ -978,6 +979,7 @@ input,textarea{
 
 #detail-overlay{
   .work-block;
+  display: none;
   transition: none;
   margin: 0;
   position: fixed;

@@ -46,7 +46,6 @@ app.directive('workimg',function($rootScope){
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            console.log('found');
             element.find('img.bg-img-hide').bind('load', function() {
                 element.removeClass("inactive");
                 //TweenMax.to(element,1,{opacity:1});
