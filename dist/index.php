@@ -55,10 +55,7 @@
                         <div class="head-cell">
                             <div class="top_logo">
                                 <a href="#/"><img src="img/logo.png" class=""/></a>
-                            </div>
-                            <div class="top_sub_logo">
-                                <img src="img/nri.png" class=""/>
-                            </div>
+                            </div>`
                         </div>
                     </nav>
                 </div>

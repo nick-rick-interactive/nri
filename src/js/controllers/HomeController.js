@@ -42,15 +42,16 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
      * @param $event project object
      */
     $scope.workClick = function($event){
+        var project = $("#proj"+$event.id);
         var wh = $(window).height();
         var ww = $(window).width();
-        var o = $(this).offset();
-        var to = (!$(this).hasClass("alt")) ? "left 50%" : "right 50%";
-        var rot = ($(this).hasClass("alt")) ? "-90" : "90";
-        $rootScope.isAltProject = $(this).hasClass("alt");
-        TweenMax.set($(this).parent().parent(),{ transformOrigin:to, transformPerspective:600});
-        TweenMax.to($(this).parent().parent(),0.5,{rotationY:rot,ease:"Cubic.easeIn"});
-        if($(this).hasClass("alt")){
+        var o = project.offset();
+        var to = (!project.hasClass("alt")) ? "left 50%" : "right 50%";
+        var rot = (project.hasClass("alt")) ? "-90" : "90";
+        $rootScope.isAltProject = project.hasClass("alt");
+        //TweenMax.set(project.parent().parent(),{ transformOrigin:to, transformPerspective:600});
+        //TweenMax.to(project.parent().parent(),0.5,{rotationY:rot,ease:"Cubic.easeIn"});
+        if(project.hasClass("alt")){
             //TweenMax.to($("body, html"),0.5,{scrollTop:0,onComplete:function(){
             TweenMax.set($("#detail-overlay"),{left:"100%",right:"auto"});
             TweenMax.to($("#main"),0.5,{left:"-100%",ease:"Cubic.easeOut",onComplete:function(){
@@ -65,7 +66,7 @@ function HomeController ($rootScope, $scope, $http, $sce, datasets) {
             },delay:0.75});
             TweenMax.to($("#detail-overlay"),0.5,{left:"0",ease:"Cubic.easeOut",delay:0.75});
         }
-        $("#detail-overlay").html($(this).html());
+        $("#detail-overlay").html(project.html());
         //window.location.href = "#work/good";
     };
 

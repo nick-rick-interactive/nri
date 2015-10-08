@@ -101,7 +101,9 @@ function getResolve(_url) {
                                     ease: 'Cubic.easeInOut',
                                     onComplete:function() {
                                         $("#main").css({top: "0", position: "relative"});
-                                        var off = ($("#main").offset()) ? $("#main").offset().top : 0;
+                                        //var off = ($("#main").offset()) ? $("#main").offset().top : 0;
+                                        var off = 220;
+                                        console.log(off);
                                         $("#main-alt").css({top: off + "px", position: "absolute"});
 
                                         //show angular data
